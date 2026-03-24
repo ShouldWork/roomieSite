@@ -1,4 +1,4 @@
-import { useAuth } from '../contexts/AuthContext.jsx';
+import { useAuth } from '../hooks/useAuth.js';
 import ScoreCards from '../components/ScoreCards.jsx';
 import ActivityChart from '../components/ActivityChart.jsx';
 import MatchDistribution from '../components/MatchDistribution.jsx';
