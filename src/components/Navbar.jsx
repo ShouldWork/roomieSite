@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext.jsx';
 
 const navItems = [
   { to: '/', label: 'Dashboard' },
@@ -8,7 +9,28 @@ const navItems = [
   { to: '/settings', label: 'Settings' },
 ];
 
+function getInitials(name) {
+  if (!name) return '?';
+  return name
+    .split(' ')
+    .map((w) => w[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+}
+
 export default function Navbar() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
+  };
+
+  const displayName = user?.displayName || user?.email?.split('@')[0] || 'User';
+  const initials = getInitials(user?.displayName || user?.email?.split('@')[0]);
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -32,11 +54,15 @@ export default function Navbar() {
           &#x1F514;
           <span className="notification-dot"></span>
         </div>
-        <div className="user-profile">
-          <div className="user-avatar">JD</div>
+        <div className="user-profile" onClick={handleLogout} title="Click to sign out">
+          {user?.photoURL ? (
+            <img src={user.photoURL} alt="" className="user-avatar-img" />
+          ) : (
+            <div className="user-avatar">{initials}</div>
+          )}
           <div className="user-info">
-            <div className="user-name">Jordan Davis</div>
-            <div className="user-role">Admin</div>
+            <div className="user-name">{displayName}</div>
+            <div className="user-role">Sign out</div>
           </div>
         </div>
       </div>
