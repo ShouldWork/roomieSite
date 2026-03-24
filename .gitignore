@@ -28,6 +28,9 @@ npm-debug.log*
 # legacy
 app_legacy/jspm_packages
 
+# firebase
+.firebase/
+
 # misc
 tmp
 bower_components/
