@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roomie - Dashboard Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ========== RESET & BASE ========== */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #F5F3FF 0%, #EEF9F6 50%, #FFF5F9 100%);
+    min-height: 100vh;
+    color: #2D2B3D;
+  }
+
+  /* ========== NAVBAR ========== */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 32px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.4);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #7C5CFC;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #7C5CFC, #B39DFF);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 18px;
+  }
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+  }
+  .nav-links li a {
+    text-decoration: none;
+    color: #6B6889;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 24px;
+    transition: all 0.2s;
+  }
+  .nav-links li a:hover { background: rgba(124,92,252,0.08); color: #7C5CFC; }
+  .nav-links li a.active {
+    background: #7C5CFC;
+    color: white;
+  }
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .btn-cta {
+    background: linear-gradient(135deg, #4ECDC4, #44B8B0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 12px rgba(78,205,196,0.3);
+  }
+  .btn-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(78,205,196,0.4); }
+  .icon-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(124,92,252,0.15);
+    background: rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .icon-btn:hover { background: rgba(124,92,252,0.08); }
+  .notification-dot {
+    position: absolute; top: 6px; right: 6px;
+    width: 8px; height: 8px;
+    background: #FF6B8A;
+    border-radius: 50%;
+    border: 2px solid white;
+  }
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 4px 12px 4px 4px;
+    border-radius: 28px;
+    transition: background 0.2s;
+  }
+  .user-profile:hover { background: rgba(124,92,252,0.06); }
+  .user-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #B39DFF, #7C5CFC);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 16px;
+  }
+  .user-info { text-align: right; }
+  .user-name { font-weight: 600; font-size: 14px; }
+  .user-role { font-size: 11px; color: #9B98B0; font-weight: 500; }
+
+  /* ========== MAIN CONTENT ========== */
+  .main { padding: 28px 32px; max-width: 1440px; margin: 0 auto; }
+
+  /* ========== WELCOME HEADER ========== */
+  .welcome-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+  }
+  .welcome-text h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2D2B3D, #7C5CFC);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+  .welcome-text p { color: #8886A0; font-size: 15px; }
+  .score-cards {
+    display: flex;
+    gap: 32px;
+  }
+  .score-card { text-align: center; }
+  .score-card .score-icon {
+    display: inline-flex;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    align-items: center; justify-content: center;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .score-card .score-value {
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .score-card .score-max {
+    font-size: 16px;
+    font-weight: 500;
+    color: #9B98B0;
+  }
+  .score-card .score-label {
+    font-size: 12px;
+    color: #8886A0;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  .score-purple .score-icon { background: rgba(124,92,252,0.15); color: #7C5CFC; }
+  .score-purple .score-value { color: #7C5CFC; }
+  .score-green .score-icon { background: rgba(78,205,196,0.15); color: #4ECDC4; }
+  .score-green .score-value { color: #4ECDC4; }
+  .score-pink .score-icon { background: rgba(255,107,138,0.15); color: #FF6B8A; }
+  .score-pink .score-value { color: #FF6B8A; }
+
+  /* ========== CARD GRID ========== */
+  .card-grid {
+    display: grid;
+    grid-template-columns: 5fr 4fr 3.5fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+  }
+  .glass-card {
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(124,92,252,0.06);
+    transition: box-shadow 0.2s;
+  }
+  .glass-card:hover { box-shadow: 0 12px 40px rgba(124,92,252,0.1); }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: #2D2B3D;
+  }
+  .card-action {
+    font-size: 13px;
+    color: #7C5CFC;
+    cursor: pointer;
+    font-weight: 500;
+    text-decoration: none;
+  }
+  .card-action:hover { text-decoration: underline; }
+  .dropdown-sm {
+    padding: 4px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(124,92,252,0.15);
+    background: rgba(255,255,255,0.6);
+    font-size: 12px;
+    color: #6B6889;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ========== ACTIVITY CHART (Placeholder) ========== */
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #8886A0;
+  }
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .chart-area {
+    position: relative;
+    height: 220px;
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid rgba(124,92,252,0.08);
+  }
+  .chart-bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .chart-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    width: 100%;
+    justify-content: center;
+  }
+  .chart-bar {
+    width: 14px;
+    border-radius: 6px 6px 2px 2px;
+    min-height: 8px;
+    transition: opacity 0.2s;
+  }
+  .chart-bar:hover { opacity: 0.8; }
+  .bar-new { background: linear-gradient(180deg, #B39DFF, #7C5CFC); }
+  .bar-active { background: linear-gradient(180deg, #D4BBFF, #A78BFA); opacity: 0.6; }
+  .bar-matched { background: linear-gradient(180deg, #E8DEFF, #C4B5FD); opacity: 0.35; }
+  .chart-label {
+    font-size: 11px;
+    color: #9B98B0;
+    margin-top: 8px;
+  }
+  .chart-y-axis {
+    position: absolute;
+    left: -4px;
+    top: 0;
+    bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .y-label { font-size: 10px; color: #B0AECA; }
+
+  /* ========== DISTRIBUTION BARS ========== */
+  .distribution-item {
+    margin-bottom: 18px;
+  }
+  .distribution-item:last-child { margin-bottom: 0; }
+  .dist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .dist-label { font-size: 13px; font-weight: 500; color: #2D2B3D; }
+  .dist-sublabel { font-size: 11px; color: #9B98B0; margin-top: 2px; }
+  .dist-value { font-size: 14px; font-weight: 700; color: #7C5CFC; }
+  .dist-bar-bg {
+    height: 10px;
+    background: rgba(124,92,252,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .dist-bar-fill {
+    height: 100%;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #7C5CFC, #B39DFF);
+    transition: width 0.6s ease;
+  }
+
+  /* ========== EXPLORE / SEARCH PANEL ========== */
+  .card-explore { grid-row: span 2; }
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: rgba(124,92,252,0.06);
+    border-radius: 12px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(124,92,252,0.1);
+  }
+  .search-box input {
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 14px;
+    color: #2D2B3D;
+    width: 100%;
+    outline: none;
+  }
+  .search-box input::placeholder { color: #B0AECA; }
+  .search-icon { color: #7C5CFC; font-size: 14px; }
+  .filter-chips {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid rgba(124,92,252,0.12);
+    background: rgba(255,255,255,0.6);
+    color: #6B6889;
+  }
+  .chip:hover { border-color: #7C5CFC; color: #7C5CFC; }
+  .chip.active { background: #7C5CFC; color: white; border-color: #7C5CFC; }
+  .trending-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2D2B3D;
+    margin-bottom: 14px;
+  }
+  .roommate-card {
+    display: flex;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .roommate-card:hover { background: rgba(124,92,252,0.04); border-color: rgba(124,92,252,0.15); }
+  .roommate-avatar {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: white; font-size: 16px;
+  }
+  .roommate-info { flex: 1; min-width: 0; }
+  .roommate-name { font-weight: 600; font-size: 13px; }
+  .roommate-detail { font-size: 11px; color: #9B98B0; margin-top: 2px; }
+  .roommate-tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  .tag-purple { background: rgba(124,92,252,0.1); color: #7C5CFC; }
+  .tag-green { background: rgba(78,205,196,0.12); color: #36B5AD; }
+  .tag-pink { background: rgba(255,107,138,0.1); color: #FF6B8A; }
+  .compatibility-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #4ECDC4;
+    white-space: nowrap;
+  }
+
+  /* ========== AI ROOMMATE HELPER ========== */
+  .ai-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+  }
+  .ai-orb {
+    width: 100px; height: 100px;
+    margin: 10px auto 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4BBFF, #B39DFF, #7C5CFC, #4ECDC4);
+    opacity: 0.7;
+    filter: blur(1px);
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 0.85; }
+  }
+  .ai-prompts {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .ai-prompt-chip {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    background: rgba(124,92,252,0.06);
+    border: 1px solid rgba(124,92,252,0.1);
+    cursor: pointer;
+    color: #6B6889;
+    transition: all 0.2s;
+  }
+  .ai-prompt-chip:hover { background: rgba(124,92,252,0.12); color: #7C5CFC; }
+  .ai-input {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .ai-input input {
+    flex: 1;
+    border: 1px solid rgba(124,92,252,0.12);
+    background: rgba(255,255,255,0.6);
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    color: #2D2B3D;
+  }
+  .ai-input input:focus { border-color: #7C5CFC; }
+  .ai-send-btn {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FF6B8A, #FF8FAB);
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 12px rgba(255,107,138,0.3);
+  }
+
+  /* ========== RECENT MATCHES TABLE ========== */
+  .table-wrapper { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  thead th {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9B98B0;
+    padding: 0 12px 12px;
+    border-bottom: 1px solid rgba(124,92,252,0.08);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  tbody td {
+    padding: 12px;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(124,92,252,0.04);
+    vertical-align: middle;
+  }
+  tbody tr:hover { background: rgba(124,92,252,0.02); }
+  .match-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .match-avatar-sm {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 11px; font-weight: 700;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .status-pending { background: rgba(255,179,71,0.12); color: #E09B30; }
+  .status-pending .status-dot { background: #FFB347; }
+  .status-accepted { background: rgba(78,205,196,0.12); color: #36B5AD; }
+  .status-accepted .status-dot { background: #4ECDC4; }
+  .status-active { background: rgba(124,92,252,0.1); color: #7C5CFC; }
+  .status-active .status-dot { background: #7C5CFC; }
+  .status-declined { background: rgba(255,107,138,0.1); color: #E85D7A; }
+  .status-declined .status-dot { background: #FF6B8A; }
+  .score-cell { font-weight: 700; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 1100px) {
+    .card-grid { grid-template-columns: 1fr 1fr; }
+    .card-explore { grid-row: span 1; }
+  }
+  @media (max-width: 768px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .navbar { padding: 12px 16px; }
+    .nav-links { display: none; }
+    .main { padding: 20px 16px; }
+    .welcome-section { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .score-cards { gap: 24px; }
+    .welcome-text h1 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== NAVBAR ======== -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <div class="logo">
+      <div class="logo-icon">R</div>
+      Roomie
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">Dashboard</a></li>
+      <li><a href="#">Explore</a></li>
+      <li><a href="#">Matches</a></li>
+      <li><a href="#">Messages</a></li>
+      <li><a href="#">Settings</a></li>
+    </ul>
+  </div>
+  <div class="navbar-right">
+    <button class="btn-cta">+ Find Roommate</button>
+    <div class="icon-btn">
+      &#x1F514;
+      <span class="notification-dot"></span>
+    </div>
+    <div class="user-profile">
+      <div class="user-avatar">JD</div>
+      <div class="user-info">
+        <div class="user-name">Jordan Davis</div>
+        <div class="user-role">Admin</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ======== MAIN ======== -->
+<main class="main">
+
+  <!-- Welcome Header -->
+  <section class="welcome-section">
+    <div class="welcome-text">
+      <h1>Welcome Back, Jordan.</h1>
+      <p>Find your perfect roommate and make your next move stress-free.</p>
+    </div>
+    <div class="score-cards">
+      <div class="score-card score-purple">
+        <div class="score-icon">&#x2764;</div>
+        <div class="score-value">87<span class="score-max">/100</span></div>
+        <div class="score-label">Compatibility</div>
+      </div>
+      <div class="score-card score-green">
+        <div class="score-icon">&#x1F91D;</div>
+        <div class="score-value">12<span class="score-max"></span></div>
+        <div class="score-label">Active Matches</div>
+      </div>
+      <div class="score-card score-pink">
+        <div class="score-icon">&#x1F440;</div>
+        <div class="score-value">34<span class="score-max"></span></div>
+        <div class="score-label">Profile Views</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Card Grid -->
+  <div class="card-grid">
+
+    <!-- ===== Weekly Activity Chart ===== -->
+    <div class="glass-card">
+      <div class="card-header">
+        <div>
+          <div class="card-title">Weekly Match Activity</div>
+          <div class="chart-legend">
+            <span class="legend-item"><span class="legend-dot" style="background:#7C5CFC"></span> New Matches</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#A78BFA"></span> Messages</span>
+            <span class="legend-item"><span class="legend-dot" style="background:#C4B5FD"></span> Profile Views</span>
+          </div>
+        </div>
+        <select class="dropdown-sm"><option>Monthly</option><option>Weekly</option></select>
+      </div>
+      <div class="chart-area">
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:60px"></div><div class="chart-bar bar-active" style="height:80px"></div><div class="chart-bar bar-matched" style="height:45px"></div></div><span class="chart-label">Jan</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:45px"></div><div class="chart-bar bar-active" style="height:65px"></div><div class="chart-bar bar-matched" style="height:55px"></div></div><span class="chart-label">Feb</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:75px"></div><div class="chart-bar bar-active" style="height:90px"></div><div class="chart-bar bar-matched" style="height:60px"></div></div><span class="chart-label">Mar</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:55px"></div><div class="chart-bar bar-active" style="height:70px"></div><div class="chart-bar bar-matched" style="height:50px"></div></div><span class="chart-label">Apr</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:95px"></div><div class="chart-bar bar-active" style="height:110px"></div><div class="chart-bar bar-matched" style="height:65px"></div></div><span class="chart-label">May</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:80px"></div><div class="chart-bar bar-active" style="height:100px"></div><div class="chart-bar bar-matched" style="height:70px"></div></div><span class="chart-label">Jun</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:120px"></div><div class="chart-bar bar-active" style="height:140px"></div><div class="chart-bar bar-matched" style="height:80px"></div></div><span class="chart-label">Jul</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:100px"></div><div class="chart-bar bar-active" style="height:130px"></div><div class="chart-bar bar-matched" style="height:90px"></div></div><span class="chart-label">Aug</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:85px"></div><div class="chart-bar bar-active" style="height:105px"></div><div class="chart-bar bar-matched" style="height:70px"></div></div><span class="chart-label">Sep</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:110px"></div><div class="chart-bar bar-active" style="height:125px"></div><div class="chart-bar bar-matched" style="height:85px"></div></div><span class="chart-label">Oct</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:130px"></div><div class="chart-bar bar-active" style="height:150px"></div><div class="chart-bar bar-matched" style="height:95px"></div></div><span class="chart-label">Nov</span></div>
+        <div class="chart-bar-group"><div class="chart-bars"><div class="chart-bar bar-new" style="height:105px"></div><div class="chart-bar bar-active" style="height:135px"></div><div class="chart-bar bar-matched" style="height:88px"></div></div><span class="chart-label">Dec</span></div>
+      </div>
+    </div>
+
+    <!-- ===== Match Distribution ===== -->
+    <div class="glass-card">
+      <div class="card-header">
+        <div class="card-title">Match Distribution</div>
+      </div>
+      <div class="distribution-item">
+        <div class="dist-header">
+          <span class="dist-label">Pending Review</span>
+          <span class="dist-value">24</span>
+        </div>
+        <div class="dist-sublabel">Awaiting your response</div>
+        <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:60%"></div></div>
+      </div>
+      <div class="distribution-item">
+        <div class="dist-header">
+          <span class="dist-label">Active Conversations</span>
+          <span class="dist-value">18</span>
+        </div>
+        <div class="dist-sublabel">Currently messaging</div>
+        <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:45%; background:linear-gradient(90deg,#4ECDC4,#7EDDD7)"></div></div>
+      </div>
+      <div class="distribution-item">
+        <div class="dist-header">
+          <span class="dist-label">Confirmed Matches</span>
+          <span class="dist-value">8</span>
+        </div>
+        <div class="dist-sublabel">Both sides accepted</div>
+        <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:20%; background:linear-gradient(90deg,#6BCB77,#95E89D)"></div></div>
+      </div>
+      <div class="distribution-item">
+        <div class="dist-header">
+          <span class="dist-label">Expired / Declined</span>
+          <span class="dist-value">6</span>
+        </div>
+        <div class="dist-sublabel">No longer active</div>
+        <div class="dist-bar-bg"><div class="dist-bar-fill" style="width:15%; background:linear-gradient(90deg,#FF6B8A,#FF8FAB)"></div></div>
+      </div>
+    </div>
+
+    <!-- ===== Explore Roommates (spans 2 rows) ===== -->
+    <div class="glass-card card-explore">
+      <div class="card-header">
+        <div class="card-title">Explore Roommates</div>
+        <div class="icon-btn" style="width:32px;height:32px;font-size:12px;">&#x2728;</div>
+      </div>
+      <div class="search-box">
+        <span class="search-icon">&#x1F50D;</span>
+        <input type="text" placeholder="Search by name, city, interests...">
+      </div>
+      <div class="filter-chips">
+        <span class="chip active">All</span>
+        <span class="chip">NYC</span>
+        <span class="chip">LA</span>
+        <span class="chip">Chicago</span>
+        <span class="chip">Remote</span>
+      </div>
+      <div class="trending-label">Top Matches For You</div>
+
+      <div class="roommate-card">
+        <div class="roommate-avatar" style="background:linear-gradient(135deg,#4ECDC4,#36B5AD)">AS</div>
+        <div class="roommate-info">
+          <div class="roommate-name">Alex Sharma</div>
+          <div class="roommate-detail">Brooklyn, NY &middot; $1,200/mo budget</div>
+          <div class="roommate-tags">
+            <span class="tag tag-purple">#EarlyBird</span>
+            <span class="tag tag-green">#NoPets</span>
+            <span class="tag tag-pink">#Remote</span>
+          </div>
+        </div>
+        <div class="compatibility-badge">94%</div>
+      </div>
+
+      <div class="roommate-card">
+        <div class="roommate-avatar" style="background:linear-gradient(135deg,#FF6B8A,#FF8FAB)">MK</div>
+        <div class="roommate-info">
+          <div class="roommate-name">Morgan Kim</div>
+          <div class="roommate-detail">Manhattan, NY &middot; $1,500/mo budget</div>
+          <div class="roommate-tags">
+            <span class="tag tag-purple">#NightOwl</span>
+            <span class="tag tag-green">#Clean</span>
+          </div>
+        </div>
+        <div class="compatibility-badge">89%</div>
+      </div>
+
+      <div class="roommate-card">
+        <div class="roommate-avatar" style="background:linear-gradient(135deg,#FFB347,#E09B30)">RP</div>
+        <div class="roommate-info">
+          <div class="roommate-name">Riley Patel</div>
+          <div class="roommate-detail">Queens, NY &middot; $1,000/mo budget</div>
+          <div class="roommate-tags">
+            <span class="tag tag-purple">#Flexible</span>
+            <span class="tag tag-pink">#PetFriendly</span>
+          </div>
+        </div>
+        <div class="compatibility-badge">85%</div>
+      </div>
+
+      <div class="roommate-card">
+        <div class="roommate-avatar" style="background:linear-gradient(135deg,#7C5CFC,#B39DFF)">TL</div>
+        <div class="roommate-info">
+          <div class="roommate-name">Taylor Lee</div>
+          <div class="roommate-detail">Hoboken, NJ &middot; $1,350/mo budget</div>
+          <div class="roommate-tags">
+            <span class="tag tag-green">#Quiet</span>
+            <span class="tag tag-purple">#WFH</span>
+          </div>
+        </div>
+        <div class="compatibility-badge">82%</div>
+      </div>
+    </div>
+
+    <!-- ===== AI Roommate Helper ===== -->
+    <div class="glass-card">
+      <div class="card-header">
+        <div class="card-title">AI Roommate Helper</div>
+        <div class="icon-btn" style="width:32px;height:32px;font-size:12px;">&#x1F916;</div>
+      </div>
+      <div class="ai-section">
+        <div class="ai-orb"></div>
+        <div>
+          <div class="ai-prompts">
+            <span class="ai-prompt-chip">&#x2728; Improve my profile</span>
+            <span class="ai-prompt-chip">&#x1F4AC; Conversation starters</span>
+            <span class="ai-prompt-chip">&#x1F50D; Refine preferences</span>
+          </div>
+          <div class="ai-input">
+            <input type="text" placeholder="Ask anything about finding a roommate...">
+            <button class="ai-send-btn">&#x27A4;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Recent Matches Table ===== -->
+    <div class="glass-card">
+      <div class="card-header">
+        <div class="card-title">Recent Matches</div>
+        <a href="#" class="card-action">See all</a>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Roommate</th>
+              <th>Status</th>
+              <th>Score</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="match-user">
+                  <div class="match-avatar-sm" style="background:linear-gradient(135deg,#4ECDC4,#36B5AD)">AS</div>
+                  Alex Sharma
+                </div>
+              </td>
+              <td><span class="status-badge status-active"><span class="status-dot"></span>Messaging</span></td>
+              <td class="score-cell" style="color:#7C5CFC">94%</td>
+              <td style="color:#9B98B0;font-size:12px">Mar 22, 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="match-user">
+                  <div class="match-avatar-sm" style="background:linear-gradient(135deg,#FF6B8A,#FF8FAB)">MK</div>
+                  Morgan Kim
+                </div>
+              </td>
+              <td><span class="status-badge status-accepted"><span class="status-dot"></span>Accepted</span></td>
+              <td class="score-cell" style="color:#4ECDC4">89%</td>
+              <td style="color:#9B98B0;font-size:12px">Mar 21, 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="match-user">
+                  <div class="match-avatar-sm" style="background:linear-gradient(135deg,#FFB347,#E09B30)">RP</div>
+                  Riley Patel
+                </div>
+              </td>
+              <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+              <td class="score-cell" style="color:#FFB347">85%</td>
+              <td style="color:#9B98B0;font-size:12px">Mar 20, 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="match-user">
+                  <div class="match-avatar-sm" style="background:linear-gradient(135deg,#7C5CFC,#B39DFF)">TL</div>
+                  Taylor Lee
+                </div>
+              </td>
+              <td><span class="status-badge status-pending"><span class="status-dot"></span>Pending</span></td>
+              <td class="score-cell" style="color:#7C5CFC">82%</td>
+              <td style="color:#9B98B0;font-size:12px">Mar 19, 2026</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="match-user">
+                  <div class="match-avatar-sm" style="background:linear-gradient(135deg,#6BCB77,#95E89D)">JW</div>
+                  Jamie Wong
+                </div>
+              </td>
+              <td><span class="status-badge status-declined"><span class="status-dot"></span>Declined</span></td>
+              <td class="score-cell" style="color:#FF6B8A">72%</td>
+              <td style="color:#9B98B0;font-size:12px">Mar 18, 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /card-grid -->
+</main>
+
+</body>
+</html>
